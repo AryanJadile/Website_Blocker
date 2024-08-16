@@ -31,6 +31,7 @@ def block_website():
         content = host_file.read()
         for website in site_block:
             if website not in content:
+                # Add website to hosts file
                 host_file.write(redirect + " " + website + "\n")
                 messagebox.showinfo("Blocked", f"{website} BLOCKED")
             else:
@@ -44,6 +45,7 @@ def unblock_website():
         content = host_file.readlines()
         host_file.seek(0)
         for line in content:
+            # Rewrite file excluding blocked websites
             if not any(website in line for website in site_block):
                 host_file.write(line)
         host_file.truncate()
@@ -124,13 +126,13 @@ def exit_program():
     root.destroy()
 
 
-# Creating the GUI window
+# Creating the main GUI window
 root = tk.Tk()
 root.title("Advanced Website Blocker")
 root.geometry("600x500")
 root.configure(bg="#2C3E50")
 
-# Labels and Entries
+# Labels and Entries for user input
 tk.Label(root, text="Enter Website to Block:", fg="#ECF0F1", bg="#2C3E50", font=("Arial", 12, "bold")).pack(pady=5)
 website_entry = tk.Entry(root, width=50, fg="#2C3E50", bg="#ECF0F1", font=("Arial", 10))
 website_entry.pack(pady=5)
@@ -144,7 +146,7 @@ tk.Label(root, text="End Time (HH:MM):", fg="#ECF0F1", bg="#2C3E50").pack()
 end_time_entry = tk.Entry(root, width=20, fg="#2C3E50", bg="#ECF0F1")
 end_time_entry.pack()
 
-# Buttons
+# Buttons for various actions
 tk.Button(root, text="Add Website", command=add_website, fg="#2C3E50", bg="#3498DB", font=("Arial", 10, "bold")).pack(
     pady=5)
 tk.Button(root, text="Block Websites", command=block_website, fg="#2C3E50", bg="#E74C3C",
@@ -157,7 +159,7 @@ tk.Button(root, text="Show Analytics", command=show_analytics, fg="#2C3E50", bg=
           font=("Arial", 10, "bold")).pack(pady=5)
 tk.Button(root, text="Exit", command=exit_program, fg="#ECF0F1", bg="#34495E", font=("Arial", 10, "bold")).pack(pady=5)
 
-# Lists
+# Frame and Listbox for blocked websites
 block_list_frame = tk.Frame(root, bg="#2C3E50")
 block_list_frame.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
@@ -165,6 +167,7 @@ tk.Label(block_list_frame, text="Blocked Websites:", fg="#ECF0F1", bg="#2C3E50",
 block_list = tk.Listbox(block_list_frame, fg="#2C3E50", bg="#ECF0F1", width=50)
 block_list.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
+# Frame and Listbox for scheduled blocks
 schedule_list_frame = tk.Frame(root, bg="#2C3E50")
 schedule_list_frame.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
@@ -175,5 +178,5 @@ schedule_list.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 # Load existing data
 load_browsing_data()
 
-# Start the GUI loop
+# Start the GUI main loop
 root.mainloop()
