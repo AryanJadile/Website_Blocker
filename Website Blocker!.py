@@ -25,7 +25,7 @@ def add_website():
         messagebox.showwarning("Input Error", "Please enter a website URL")
 
 
-# Function to block websites
+# Function to block website
 def block_website():
     with open(host_file_path, "r+") as host_file:
         content = host_file.read()
